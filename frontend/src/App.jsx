@@ -6,6 +6,8 @@ import ProductDetails from "./components/ProductDetails";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import MakeOrder from "./components/MakeOrder";
+import Cart from "./components/Cart";
+import Login from "./components/Login/Login";
 
 const App = () => {
   return (
@@ -18,6 +20,8 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/make-order" element={<MakeOrder />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
     </Router>

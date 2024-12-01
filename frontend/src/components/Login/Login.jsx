@@ -1,11 +1,11 @@
 // src/pages/Login.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { contexApi } from "../Context/ContexApi";
+// import { contexApi } from "../Context/ContexApi";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setToken } = contexApi();
+  // const { setToken } = contexApi();
 
   const [login, setLogin] = useState({
     userName: "",
@@ -31,7 +31,7 @@ const Login = () => {
       const user = await res.json();
       if (res.ok) {
         sessionStorage.setItem("token", user.Token);
-        setToken(user.Token);
+        // setToken(user.Token);
         navigate("/admin");
       } else {
         alert(user.message || "Login failed. Please try again.");
