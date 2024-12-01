@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import MakeOrder from "./components/MakeOrder";
 import Cart from "./components/Cart";
 import Login from "./components/Login/Login";
+import Register from "./components/Register";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/make-order" element={<MakeOrder />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />;
         </Routes>
       </div>
     </Router>

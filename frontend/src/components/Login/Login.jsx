@@ -1,6 +1,6 @@
 // src/pages/Login.js
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { contexApi } from "../Context/ContexApi";
 
 const Login = () => {
@@ -19,7 +19,7 @@ const Login = () => {
   const submit = async () => {
     try {
       const res = await fetch(
-        "https://islamia-school-backend.vercel.app/api/auth/login",
+        "https://handcraft-web-j6a7.vercel.app/api/users/login",
         {
           method: "POST",
           headers: {
@@ -29,10 +29,12 @@ const Login = () => {
         }
       );
       const user = await res.json();
+      console.log(user)
       if (res.ok) {
+
         sessionStorage.setItem("token", user.Token);
         // setToken(user.Token);
-        navigate("/admin");
+        navigate("/");
       } else {
         alert(user.message || "Login failed. Please try again.");
       }
@@ -83,6 +85,11 @@ const Login = () => {
         >
           Submit
         </button>
+        <div className="text my-4">
+          <Link to={"/register"} className="cursor-pointer">
+            Dont Have An Account - <span className="text-blue-600 font-sans font-semibold">Register Now</span>
+          </Link>
+        </div>
       </div>
     </div>
   );

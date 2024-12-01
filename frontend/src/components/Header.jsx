@@ -58,10 +58,14 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-slate-500 text-white fixed w-full top-0 z-50">
+    <header className="bg-blue-500 text-white fixed w-full top-0 z-50">
       <div className="container mx-auto flex justify-between items-center p-4">
         <NavLink to={"/"}>
-          <img src="" alt="islami-school" className="w-[100px]" />
+          <img
+            src="https://makemygarden.com/wp-content/themes/twentytwenty/images/logo.png"
+            alt="islami-school"
+            className="w-[100px]"
+          />
         </NavLink>
         <nav className="hidden md:flex space-x-4 font-bold">
           <NavLink to="/" className="hover:text-yellow-500">
