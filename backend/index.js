@@ -20,5 +20,8 @@ app.use("/api/products", productRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/orders", orderRoutes);
 
+app.get('/',(req,res)=>{
+    res.send("welcome to handcraft backend")
+})
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
