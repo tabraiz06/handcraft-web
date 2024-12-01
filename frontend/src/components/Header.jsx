@@ -43,19 +43,15 @@ const Header = () => {
             About
           </NavLink>
           <NavLink to="/courses" className="hover:text-yellow-500">
-            Courses
+            Products
           </NavLink>
-          <NavLink to="/admission" className="hover:text-yellow-500">
-            Admissions
-          </NavLink>
+          
           <NavLink to="/gallery" className="hover:text-yellow-500">
             Gallery
           </NavLink>
-          <NavLink to="/result" className="hover:text-yellow-500">
-            Results
-          </NavLink>
+          
           <NavLink to="/contact" className="hover:text-yellow-500">
-            Contact
+            Contact Us
           </NavLink>
           <NavLink to="/admin" className="hover:text-yellow-500">
             Admin
@@ -99,31 +95,19 @@ const Header = () => {
             className="block py-2 px-4 hover:bg-gray-700"
             onClick={toggleSidebar}
           >
-            Courses
+            Products
           </NavLink>
-          <NavLink
-            to="/admission"
-            className="block py-2 px-4 hover:bg-gray-700"
-            onClick={toggleSidebar}
-          >
-            Admissions
-          </NavLink>
+          
           <NavLink to="/gallery" className="block py-2 px-4 hover:bg-gray-700">
             Gallery
           </NavLink>
-          <NavLink
-            to="/result"
-            className="block py-2 px-4 hover:bg-gray-700"
-            onClick={toggleSidebar}
-          >
-            Results
-          </NavLink>
+          
           <NavLink
             to="/contact"
             className="block py-2 px-4 hover:bg-gray-700"
             onClick={toggleSidebar}
           >
-            Contact
+            Contact Us
           </NavLink>
           <NavLink
             to="/admin"
