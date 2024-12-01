@@ -12,7 +12,7 @@ const ProductDetails = () => {
     const fetchProduct = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:5000/api/products/${id}`
+          `https://handcraft-web-j6a7.vercel.app/api/products/${id}`
         );
         setProduct(data);
         setLoading(false);
