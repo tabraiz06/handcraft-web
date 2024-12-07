@@ -10,16 +10,18 @@ const Header = () => {
   const [cartItems, setCartItems] = useState(0); // Simulated cart count
   const navigate = useNavigate();
 
+  // Simulate checking authentication and cart items
+  const loggedInUser = (localStorage.getItem("user")) ;
+  const storedCartItems = (localStorage.getItem("cartItems")) || [];
+
   useEffect(() => {
-    // Simulate checking authentication and cart items
-    const loggedInUser = JSON.parse(localStorage.getItem("user"));
-    const storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    
     if (loggedInUser) {
       setIsLoggedIn(true);
       setUser(loggedInUser);
     }
     setCartItems(storedCartItems.length);
-  }, []);
+  }, [loggedInUser]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -105,7 +107,7 @@ const Header = () => {
 
           {isLoggedIn ? (
             <div className="flex items-center space-x-2">
-              <span className="hidden md:block">{user?.name || "User"}</span>
+              <span className="hidden md:block">{user || "User"}</span>
               <button
                 onClick={handleLogout}
                 className="bg-red-500 px-4 py-2 rounded text-white hover:bg-red-600 transition"

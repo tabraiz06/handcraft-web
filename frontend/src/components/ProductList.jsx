@@ -8,9 +8,7 @@ const ProductList = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-        const { data } = await axios.get(
-          "https://handcraft-web-j6a7.vercel.app/api/products"
-        );
+        const { data } = await axios.get("http://localhost:5000/api/products");
         setProducts(data);
         console.log(data)
     };

@@ -32,14 +32,26 @@ const updateProduct = async (req, res) => {
 };
 
 const deleteProduct = async (req, res) => {
-  await Product.findByIdAndDelete(req.body.id);
+  console.log(req.params.id)
+  await Product.findByIdAndDelete(req.params.id);
   res.json({ message: "Product deleted" });
 };
 
+const getAdminProducts = async (req, res) => {
+  try {
+    const products = await Product.find({});
+    res.status(200).json(products);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to fetch products", error: error.message });
+  }
+};
 module.exports = {
   getAllUsers,
   getAllOrders,
   addProduct,
   updateProduct,
   deleteProduct,
+  getAdminProducts,
 };

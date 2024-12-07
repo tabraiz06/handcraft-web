@@ -7,6 +7,8 @@ const productRoutes = require("./routes/productRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const userRoutes = require("./routes/userRoutes");
+const addressRoutes = require("./routes/addressRoutes");
+const uploadRoutes = require("./routes/uploadRoutes");
 
 dotenv.config();
 connectDB();
@@ -20,6 +22,12 @@ app.use(cors())
 app.get("/", (req, res) => {
   res.send("welcome to handcraft backend");
 });
+
+
+// Use the upload routes
+app.use("/api/upload", uploadRoutes);
+
+app.use("/api", addressRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/admin", adminRoutes);

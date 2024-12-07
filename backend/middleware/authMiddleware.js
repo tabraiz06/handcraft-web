@@ -4,15 +4,10 @@ const User = require("../models/User");
 
 // Middleware to protect routes
 const protect = async (req, res, next) => {
-  let token=req.header("token")
-
-  if (
-    token
-  ) {
+  let token = req.header("token");
+console.log(token)
+  if (token) {
     try {
-      // Get token from header
-     
-
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = await User.findById(decoded.id).select("-password"); // Exclude password

@@ -8,7 +8,7 @@ const Login = () => {
   // const { setToken } = contexApi();
 
   const [login, setLogin] = useState({
-    userName: "",
+    email: "",
     password: "",
   });
 
@@ -19,7 +19,7 @@ const Login = () => {
   const submit = async () => {
     try {
       const res = await fetch(
-        "https://handcraft-web-j6a7.vercel.app/api/users/login",
+        "http://localhost:5000/api/users/login",
         {
           method: "POST",
           headers: {
@@ -32,7 +32,8 @@ const Login = () => {
       console.log(user)
       if (res.ok) {
 
-        sessionStorage.setItem("token", user.Token);
+        localStorage.setItem("token", user.token);
+        localStorage.setItem("user", user.name);
         // setToken(user.Token);
         navigate("/");
       } else {
@@ -51,11 +52,11 @@ const Login = () => {
         </h1>
         <div className="mb-4">
           <label htmlFor="userName" className="block text-gray-600 mb-2">
-            Username
+            Email
           </label>
           <input
             type="text"
-            name="userName"
+            name="email"
             id="userName"
             placeholder="Enter your username"
             onChange={handleInput}

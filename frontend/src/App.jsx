@@ -9,6 +9,7 @@ import MakeOrder from "./components/MakeOrder";
 import Cart from "./components/Cart";
 import Login from "./components/Login/Login";
 import Register from "./components/Register";
+import AdminProducts from "./components/AdminProducts";
 
 const App = () => {
   return (
@@ -19,10 +20,12 @@ const App = () => {
       <div className="main min-h-[90vh]">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/admin" element={<AdminProducts />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/make-order" element={<MakeOrder />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
+
           <Route path="/register" element={<Register />} />;
         </Routes>
       </div>

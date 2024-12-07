@@ -26,13 +26,16 @@ const Register = () => {
 
     try {
       const { data } = await axios.post(
-        "https://handcraft-web-j6a7.vercel.app/api/users/register", // Replace with your backend endpoint
+        "http://localhost:5000/api/users/register", // Replace with your backend endpoint
         formData
       );
       setMessage("Registration successful!");
       setFormData({ name: "", email: "", phone: "", password: "" });
       if(data){
         navigate('/')
+        localStorage.setItem("user", data.name);
+        localStorage.setItem('token', data.token)
+
       }
     } catch (error) {
       setMessage("Error during registration. Please try again.");
