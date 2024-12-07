@@ -5,7 +5,7 @@ const User = require("../models/User");
 // Middleware to protect routes
 const protect = async (req, res, next) => {
   let token = req.header("token");
-console.log(token)
+
   if (token) {
     try {
       // Verify token
@@ -24,6 +24,7 @@ console.log(token)
 
 // Middleware to check if user is an admin
 const adminOnly = (req, res, next) => {
+  
   if (req.user && req.user.isAdmin) {
     next();
   } else {

@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
-    const navigate= useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,7 +14,6 @@ const Register = () => {
   const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
-
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -26,16 +25,15 @@ const Register = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/users/register", // Replace with your backend endpoint
+        "https://handcraft-web-j6a7.vercel.app/api/users/register", // Replace with your backend endpoint
         formData
       );
       setMessage("Registration successful!");
       setFormData({ name: "", email: "", phone: "", password: "" });
-      if(data){
-        navigate('/')
+      if (data) {
+        navigate("/");
         localStorage.setItem("user", data.name);
-        localStorage.setItem('token', data.token)
-
+        localStorage.setItem("token", data.token);
       }
     } catch (error) {
       setMessage("Error during registration. Please try again.");
@@ -133,7 +131,7 @@ const Register = () => {
         </form>
         <div className="text my-4">
           <Link to={"/login"} className="cursor-pointer">
-             Have An Account -{" "}
+            Have An Account -{" "}
             <span className="text-blue-600 font-sans font-semibold">
               Login Now
             </span>

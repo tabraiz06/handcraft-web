@@ -1,26 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
+import axios from "axios";
 
 const Header = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [timeoutId, setTimeoutId] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  const [cartItems, setCartItems] = useState(0); // Simulated cart count
+  const [cartItems, setCartItems] = useState([]); // Simulated cart count
   const navigate = useNavigate();
 
   // Simulate checking authentication and cart items
-  const loggedInUser = (localStorage.getItem("user")) ;
-  const storedCartItems = (localStorage.getItem("cartItems")) || [];
+  const loggedInUser = localStorage.getItem("user");
+  const admin = localStorage.getItem("admin");
+  // const storedCartItems = (localStorage.getItem("cartItems")) || [];
 
   useEffect(() => {
-    
+    const fetchCart = async () => {
+      try {
+        const { data } = await axios.get(
+          "https://handcraft-web-j6a7.vercel.app/api/cart",
+          {
+            headers: { token: localStorage.getItem("token") },
+          }
+        );
+        setCartItems(data.items);
+      } catch (error) {
+        console.error("Error fetching cart:", error);
+        alert("Failed to fetch cart.");
+      }
+    };
+    fetchCart();
     if (loggedInUser) {
       setIsLoggedIn(true);
       setUser(loggedInUser);
     }
-    setCartItems(storedCartItems.length);
   }, [loggedInUser]);
 
   const toggleSidebar = () => {
@@ -85,7 +100,7 @@ const Header = () => {
           <NavLink to="/contact" className="hover:text-yellow-500">
             Contact Us
           </NavLink>
-          {isLoggedIn && (
+          {admin && (
             <NavLink to="/admin" className="hover:text-yellow-500">
               Admin
             </NavLink>
@@ -98,9 +113,10 @@ const Header = () => {
               className="text-2xl cursor-pointer hover:text-yellow-500 transition"
               onClick={navigateToCart}
             />
-            {cartItems > 0 && (
+            {console.log(cartItems)}
+            {cartItems.length > 0 && (
               <span className="absolute top-[-10px] right-[-10px] bg-red-600 text-white text-xs font-bold rounded-full px-2 py-[1px]">
-                {cartItems}
+                {cartItems.length}
               </span>
             )}
           </div>

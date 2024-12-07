@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    price: "",
-    images: [],
-    stock: "",
-  });
-  const [uploading, setUploading] = useState(false);
+  const navigate = useNavigate();
 
   const fetchProducts = async () => {
     const { data } = await axios.get(
-      "http://localhost:5000/api/admin/products",{headers:{token:localStorage.getItem('token')}}
+      "https://handcraft-web-j6a7.vercel.app/api/admin/products",
+      { headers: { token: localStorage.getItem("token") } }
     );
     setProducts(data);
   };
@@ -23,113 +18,39 @@ const AdminProducts = () => {
     fetchProducts();
   }, []);
 
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleAddProduct = () => {
+    navigate("/admin/add-product"); // Navigate to add product form
   };
-
-  const handleFilesUpload = async (e) => {
-    const files = Array.from(e.target.files);
-    const formData = new FormData();
-    files.forEach((file) => formData.append("images", file));
-
-    setUploading(true);
+  const deleteProduct = async (id) => {
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            token: localStorage.getItem("token"),
-          },
-        }
+      const res = await axios.delete(
+        `https://handcraft-web-j6a7.vercel.app/api/admin/products/${id}`,
+        { headers: { token: localStorage.getItem("token") } }
       );
-      setFormData((prevState) => ({
-        ...prevState,
-        images: [...prevState.images, ...data.filePaths],
-      }));
+      console.log(res.data);
+      fetchProducts();
     } catch (error) {
-      console.error("Failed to upload images:", error);
-    } finally {
-      setUploading(false);
+      console.error("Failed to delete:", error);
     }
   };
 
-  const handleAddProduct = async (e) => {
-    e.preventDefault();
-    await axios.post("http://localhost:5000/api/admin/products", formData, {
-      headers: { token: localStorage.getItem("token") },
-    });
-    fetchProducts();
-    setFormData({
-      name: "",
-      description: "",
-      price: "",
-      images: [],
-      stock: "",
-    });
+  const handleViewProduct = (id) => {
+    navigate(`/admin/view-product/${id}`); // Navigate to view product details
   };
-
-  const deleteProduct= async(id)=>{
-    try {
-        const res = await axios.delete(
-          `http://localhost:5000/api/admin/products/${id}`,{headers:{token:localStorage.getItem('token')}}
-        );
-        console.log(res.data)
-        fetchProducts()
-    } catch (error) {
-        console.error("Failed to delete:", error);
-    }
-  }
 
   return (
-    <div className="container mx-auto py-8">
-      <h2 className="text-2xl font-bold mb-4">Manage Products</h2>
-      <form onSubmit={handleAddProduct} className="space-y-4 mb-8">
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleInputChange}
-          className="w-full border px-4 py-2 rounded"
-        />
-        <textarea
-          name="description"
-          placeholder="Description"
-          value={formData.description}
-          onChange={handleInputChange}
-          className="w-full border px-4 py-2 rounded"
-        />
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          value={formData.price}
-          onChange={handleInputChange}
-          className="w-full border px-4 py-2 rounded"
-        />
-        <input
-          type="number"
-          name="stock"
-          placeholder="Stock"
-          value={formData.stock}
-          onChange={handleInputChange}
-          className="w-full border px-4 py-2 rounded"
-        />
-        <input
-          type="file"
-          multiple
-          onChange={handleFilesUpload}
-          className="w-full border px-4 py-2 rounded"
-        />
-        {uploading && <p>Uploading images...</p>}
-        <button className="bg-blue-500 text-white px-6 py-2 rounded shadow">
-          Add Product
+    <div className="container mx-auto py-8 px-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Admin Product Management</h1>
+        <button
+          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
+          onClick={handleAddProduct}
+        >
+          Add New Product
         </button>
-      </form>
+      </div>
 
-      <table className="w-full border">
+      <table className="w-full border text-center">
         <thead>
           <tr>
             <th className="border px-4 py-2">Name</th>
@@ -145,18 +66,20 @@ const AdminProducts = () => {
               <td className="border px-4 py-2">${product.price}</td>
               <td className="border px-4 py-2">{product.stock}</td>
               <td className="border px-4 py-2">
-                <button
-                  onClick={() => console.log("Edit product functionality")}
-                  className="bg-yellow-500 text-white px-4 py-1 rounded"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => deleteProduct(product._id)}
-                  className="bg-red-500 text-white px-4 py-1 rounded"
-                >
-                  Delete
-                </button>
+                <div className="flex justify-around">
+                  <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                    onClick={() => handleViewProduct(product._id)}
+                  >
+                    View Details
+                  </button>
+                  <button
+                    onClick={() => deleteProduct(product._id)}
+                    className="bg-red-500 text-white px-4 py-1 rounded"
+                  >
+                    Delete
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

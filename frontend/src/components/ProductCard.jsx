@@ -23,7 +23,7 @@ const ProductCard = ({ product, addToCart }) => {
           className="absolute top-2 right-2 bg-blue-500 text-white p-2 rounded-full shadow-md hover:bg-blue-600"
           onClick={(e) => {
             e.stopPropagation(); // Prevents triggering the card click
-            addToCart(product);
+            addToCart(product._id);
           }}
         >
           <FaCartPlus />

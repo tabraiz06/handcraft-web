@@ -19,7 +19,7 @@ const Login = () => {
   const submit = async () => {
     try {
       const res = await fetch(
-        "http://localhost:5000/api/users/login",
+        "https://handcraft-web-j6a7.vercel.app/api/users/login",
         {
           method: "POST",
           headers: {
@@ -29,11 +29,11 @@ const Login = () => {
         }
       );
       const user = await res.json();
-      console.log(user)
+      console.log(user);
       if (res.ok) {
-
         localStorage.setItem("token", user.token);
         localStorage.setItem("user", user.name);
+        localStorage.setItem("admin", user.isAdmin);
         // setToken(user.Token);
         navigate("/");
       } else {
@@ -88,7 +88,10 @@ const Login = () => {
         </button>
         <div className="text my-4">
           <Link to={"/register"} className="cursor-pointer">
-            Dont Have An Account - <span className="text-blue-600 font-sans font-semibold">Register Now</span>
+            Dont Have An Account -{" "}
+            <span className="text-blue-600 font-sans font-semibold">
+              Register Now
+            </span>
           </Link>
         </div>
       </div>

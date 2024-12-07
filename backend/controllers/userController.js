@@ -19,6 +19,7 @@ const registerUser = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
   } else {
@@ -36,6 +37,7 @@ const loginUser = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      isAdmin:user.isAdmin,
       token: generateToken(user._id),
     });
   } else {
