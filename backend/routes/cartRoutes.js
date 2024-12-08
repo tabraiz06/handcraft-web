@@ -47,9 +47,7 @@ router.get("/", protect, async (req, res) => {
       "items.product"
     );
 
-    if (!cart) {
-      return res.status(404).json({ message: "Cart not found" });
-    }
+    
 
     res.json(cart);
   } catch (error) {

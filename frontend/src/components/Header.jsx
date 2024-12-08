@@ -7,6 +7,7 @@ const Header = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [timeoutId, setTimeoutId] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [user, setUser] = useState(null);
   const [cartItems, setCartItems] = useState([]); // Simulated cart count
   const navigate = useNavigate();
@@ -15,26 +16,28 @@ const Header = () => {
   const loggedInUser = localStorage.getItem("user");
   const admin = localStorage.getItem("admin");
   // const storedCartItems = (localStorage.getItem("cartItems")) || [];
-
-  useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const { data } = await axios.get(
-          "https://handcraft-web-j6a7.vercel.app/api/cart",
-          {
-            headers: { token: localStorage.getItem("token") },
-          }
-        );
-        setCartItems(data.items);
-      } catch (error) {
-        console.error("Error fetching cart:", error);
-        alert("Failed to fetch cart.");
+const fetchCart = async () => {
+  try {
+    const { data } = await axios.get(
+      "https://handcraft-web-j6a7.vercel.app/api/cart",
+      {
+        headers: { token: localStorage.getItem("token") },
       }
-    };
-    fetchCart();
+    );
+    setCartItems(data.items);
+  } catch (error) {
+    console.error("Error fetching cart:", error);
+    alert("Failed to fetch cart.");
+  }
+};
+  useEffect(() => {
+    
+    
     if (loggedInUser) {
       setIsLoggedIn(true);
+      fetchCart();
       setUser(loggedInUser);
+      setIsAdmin(admin)
     }
   }, [loggedInUser]);
 
@@ -61,9 +64,14 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("admin");
     setIsLoggedIn(false);
+    setIsAdmin(false)
     setUser(null);
     navigate("/login");
+    setCartItems([])
+
   };
 
   const handleLogin = () => {
@@ -91,16 +99,23 @@ const Header = () => {
           <NavLink to="/about" className="hover:text-yellow-500">
             About
           </NavLink>
-          <NavLink to="/products" className="hover:text-yellow-500">
+          <NavLink to="/" className="hover:text-yellow-500">
             Products
           </NavLink>
-          <NavLink to="/gallery" className="hover:text-yellow-500">
+          {/* <NavLink to="/gallery" className="hover:text-yellow-500">
             Gallery
-          </NavLink>
-          <NavLink to="/contact" className="hover:text-yellow-500">
-            Contact Us
-          </NavLink>
-          {admin && (
+          </NavLink> */}
+          {console.log(isAdmin)}
+          {isAdmin ? (
+            <NavLink to="admin/contact" className="hover:text-yellow-500">
+              Contact Us
+            </NavLink>
+          ) : (
+            <NavLink to="/contact" className="hover:text-yellow-500">
+              Contact Us
+            </NavLink>
+          )}
+          {isAdmin && (
             <NavLink to="/admin" className="hover:text-yellow-500">
               Admin
             </NavLink>

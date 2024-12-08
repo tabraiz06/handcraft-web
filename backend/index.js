@@ -10,6 +10,7 @@ const userRoutes = require("./routes/userRoutes");
 const addressRoutes = require("./routes/addressRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
 const cartRoutes = require("./routes/cartRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 
 dotenv.config();
 connectDB();
@@ -25,6 +26,9 @@ app.get("/", (req, res) => {
 
 // Use the upload routes
 app.use("/api/upload", uploadRoutes);
+
+// Add this line to use the contact route
+app.use("/api/contact", contactRoutes);
 
 app.use("/api/cart", cartRoutes);
 app.use("/api", addressRoutes);

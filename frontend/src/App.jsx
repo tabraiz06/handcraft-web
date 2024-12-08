@@ -13,6 +13,8 @@ import AdminProducts from "./components/AdminProducts";
 import AddProduct from "./components/AddProduct";
 import ViewProduct from "./components/ViewProduct";
 import { RiWhatsappFill } from "react-icons/ri";
+import ContactUs from "./components/ContactUs";
+import AdminContacts from "./components/AdminContacts";
 
 const App = () => {
   const handleWhatsAppRedirect = () => {
@@ -38,6 +40,11 @@ const App = () => {
           <Route path="/register" element={<Register />} />;
           <Route path="/admin/view-product/:id" element={<ViewProduct />} />
           <Route path="/admin/add-product" element={<AddProduct />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route
+            path="/admin/contact"
+            element={<AdminContacts />}
+          />
         </Routes>
         {/* WhatsApp Icon */}
         <RiWhatsappFill
